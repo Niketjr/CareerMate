@@ -1,0 +1,52 @@
+/* Font Loading: Helvetica Neue Light or fallback */
+@import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@300&display=swap');
+
+.home-container {
+    font-family: 'Helvetica Neue', sans-serif;
+    background-color: white;
+    color: black;
+    min-height: 100vh;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.top-bar,
+.footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.top-right {
+    display: flex;
+    gap: 2rem;
+}
+
+.main-content {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.main-content h1 {
+    font-size: 4vw;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.sub {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    text-decoration: underline;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    opacity: 0.6;
+}
