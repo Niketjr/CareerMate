@@ -1,0 +1,42 @@
+.resume-detail-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.resume-detail-container h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    text-align: center;
+}
+
+.resume-field {
+    margin-bottom: 16px;
+}
+
+.resume-field strong {
+    display: inline-block;
+    width: 120px;
+    color: #34495e;
+}
+
+.resume-field span {
+    color: #2c3e50;
+}
+
+@media screen and (max-width: 600px) {
+    .resume-field strong {
+        width: auto;
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .resume-detail-container {
+        padding: 20px;
+    }
+}

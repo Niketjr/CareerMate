@@ -4,17 +4,25 @@ import axios from "axios";
 import "./Recommendations.css";
 
 const Recommendations = () => {
-    const { id } = useParams(); // resume id
+    const { id } = useParams(); 
     const [loading, setLoading] = useState(true);
     const [recommendations, setRecommendations] = useState([]);
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        if (!id) {
+            setError("Invalid resume ID.");
+            setLoading(false);
+            return;
+        }
+
         const fetchRecommendations = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/recommendations/${id}`);
-                setRecommendations(res.data.recommendations || []);
+                const response = await axios.get(`http://localhost:8000/api/recommendations/${id}`);
+                console.log(response);
+                setRecommendations(response.data.recommendations || []);
             } catch (err) {
+                console.error(err);
                 setError("Failed to fetch job recommendations.");
             } finally {
                 setLoading(false);
@@ -23,6 +31,7 @@ const Recommendations = () => {
 
         fetchRecommendations();
     }, [id]);
+    
 
     if (loading) return <div className="recommendations-container">Loading recommendations...</div>;
     if (error) return <div className="recommendations-container error">{error}</div>;
@@ -38,7 +47,9 @@ const Recommendations = () => {
                         <li key={index} className="recommendation-item">
                             <h3>{job.title}</h3>
                             <p>{job.description}</p>
-                            <p className="skills-match">Matches your skills: {job.matchingSkills.join(", ")}</p>
+                            <p className="skills-match">
+                                Matches your skills: {job.matchingSkills?.join(", ") || "None"}
+                            </p>
                         </li>
                     ))}
                 </ul>

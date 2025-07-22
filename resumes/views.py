@@ -5,7 +5,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Resume
 from .serializers import ResumeSerializer
 from .parser import parse_resume
-from resumes.utils import extract_skills_from_resume
+from resumes.parser import extract_skills
 
 class ResumeUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)
@@ -17,11 +17,17 @@ class ResumeUploadView(APIView):
         if not uploaded_file:
             return Response({"error": "No file uploaded."}, status=400)
 
-        # Optional: Extract skills here using your utility function
-        skills = extract_skills_from_resume(uploaded_file)
+        # ✅ Parse the uploaded resume using Step 1
+        text, skills, education, experience = parse_resume(uploaded_file)
 
-        # Save the file and create Resume instance
-        resume = Resume.objects.create(file=uploaded_file, skills=skills)
+        # ✅ Save the parsed info along with file
+        resume = Resume.objects.create(
+            file=uploaded_file,
+            parsed_text=text,
+            skills=skills,
+            education=education,
+            experience=experience
+        )
 
         return Response({"resume_id": resume.id}, status=201)
 

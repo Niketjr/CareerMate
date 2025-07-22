@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import "./uploadResume.css";
 
 axios.defaults.withCredentials = true;
@@ -7,6 +8,14 @@ axios.defaults.withCredentials = true;
 const UploadResume = () => {
     const [selectedFile, setSelectedFile] = useState(null);
     const [resumeId, setResumeId] = useState(null);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const savedId = sessionStorage.getItem("resume_id");
+        if (savedId) {
+            setResumeId(savedId);
+        }
+    }, []);
 
     const handleFileChange = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -36,10 +45,8 @@ const UploadResume = () => {
 
             const { resume_id } = response.data;
             setResumeId(resume_id);
+            sessionStorage.setItem("resume_id", resume_id);
             alert("Resume uploaded successfully. ID: " + resume_id);
-
-            // Optionally, store the ID in localStorage
-            localStorage.setItem("resume_id", resume_id);
         } catch (error) {
             console.error("Upload error:", error);
             alert("Error uploading resume.");
@@ -67,9 +74,25 @@ const UploadResume = () => {
             </form>
 
             {resumeId && (
-                <p className="resume-id-info">
-                    Resume uploaded with ID: <strong>{resumeId}</strong>
-                </p>
+                <div className="resume-options">
+                    <p className="resume-id-info">
+                        Resume uploaded with ID: <strong>{resumeId}</strong>
+                    </p>
+
+                    <button
+                        className="resume-button"
+                        onClick={() => navigate(`/resume/${resumeId}`)}
+                    >
+                        View Resume Details
+                    </button>
+
+                    <button
+                        className="resume-button"
+                        onClick={() => navigate(`/recommendations/${resumeId}`)}
+                    >
+                        View Recommendations
+                    </button>
+                </div>
             )}
         </div>
     );

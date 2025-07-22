@@ -19,7 +19,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/upload" element={<UploadResume />} />
         <Route path="/resume/:id" element={<ResumeDetail />} />
-        <Route path="/recommendations" element={<Recommendations />} />
+        <Route path="/recommendations/:id" element={<Recommendations />} />
         <Route path="/chat" element={<Chatbot />} />
       </Routes>
     </Router>
