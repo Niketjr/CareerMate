@@ -163,17 +163,6 @@ CareerMate/
   }
   ```
 
----
-
-## 🔐 Environment Variables
-
-Create a `.env` file in the backend folder for configuration (optional):
-
-```env
-OLLAMA_URL=http://localhost:11434/api/generate
-DEBUG=True
-SECRET_KEY=your-secret-key
-```
 
 ---
 
