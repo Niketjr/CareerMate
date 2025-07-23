@@ -5,7 +5,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Resume
 from .serializers import ResumeSerializer
 from .parser import parse_resume
-from resumes.parser import extract_skills
+# from resumes.parser import extract_skills
 
 class ResumeUploadView(APIView):
     parser_classes = (MultiPartParser, FormParser)

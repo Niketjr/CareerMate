@@ -40,9 +40,6 @@ const ResumeDetail = () => {
                 <strong>Name:</strong> <span>{resume.name}</span>
             </div>
             <div className="resume-field">
-                <strong>Email:</strong> <span>{resume.email}</span>
-            </div>
-            <div className="resume-field">
                 <strong>Skills:</strong> <span>{resume.skills?.join(', ')}</span>
             </div>
             <div className="resume-field">

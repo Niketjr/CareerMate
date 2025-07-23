@@ -1,24 +1,37 @@
-def recommend_based_on_skills(skills):
-    """
-    Very basic rule-based recommendation system.
-    You can replace this with ML later.
-    """
-    recommendations = []
+import requests
+import json
 
-    job_map = {
-        "Python": ["Backend Developer", "Data Analyst", "Automation Engineer"],
-        "Django": ["Backend Developer"],
-        "REST": ["API Developer", "Full-Stack Developer"],
-        "React": ["Frontend Developer", "Full-Stack Developer"],
-        "Machine Learning": ["ML Engineer", "Data Scientist"],
-        "AWS": ["Cloud Engineer", "DevOps Engineer"],
-        "SQL": ["Database Admin", "BI Analyst"]
+OLLAMA_URL = "http://localhost:11434/api/generate"
+
+def recommend_based_on_skills(skills):
+    if not skills:
+        return []
+
+    prompt = f"Skills: {', '.join(skills)}"
+
+    payload = {
+        "model": "job-recommender",  # your Modelfile model
+        "prompt": prompt,
+        "stream": False
     }
 
-    for skill in skills:
-        matched_jobs = job_map.get(skill, [])
-        for job in matched_jobs:
-            if job not in recommendations:
-                recommendations.append(job)
+    try:
+        response = requests.post(OLLAMA_URL, json=payload)
+        response.raise_for_status()
 
-    return recommendations
+        data = response.json()
+        raw_response = data.get("response", "")
+
+        # Try to parse the JSON array from model response
+        try:
+            return json.loads(raw_response)
+        except json.JSONDecodeError:
+            # Fallback: extract JSON array using regex
+            import re
+            match = re.search(r'\[.*?\]', raw_response, re.DOTALL)
+            if match:
+                return json.loads(match.group())
+            else:
+                return ["No valid recommendations parsed."]
+    except Exception as e:
+        return [f"Error: {str(e)}"]

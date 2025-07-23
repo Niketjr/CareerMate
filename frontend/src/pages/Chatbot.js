@@ -6,18 +6,41 @@ const Chatbot = () => {
         { sender: "bot", text: "Hi there! How can I help you today?" }
     ]);
     const [input, setInput] = useState("");
+    const [loading, setLoading] = useState(false);
 
-    const sendMessage = () => {
+    const sendMessage = async () => {
         if (input.trim() === "") return;
 
         const userMessage = { sender: "user", text: input };
-        const botReply = {
-            sender: "bot",
-            text: "Thanks for your message! (Bot logic not implemented yet)"
-        };
-
-        setMessages([...messages, userMessage, botReply]);
+        setMessages(prev => [...prev, userMessage]);
         setInput("");
+        setLoading(true);
+
+        try {
+            const response = await fetch("http://localhost:8000/chatbot/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message: input })
+            });
+
+            const data = await response.json();
+
+            const botReply = {
+                sender: "bot",
+                text: data.response || "Sorry, I couldn't process that."
+            };
+
+            setMessages(prev => [...prev, botReply]);
+        } catch (error) {
+            setMessages(prev => [
+                ...prev,
+                { sender: "bot", text: "Error connecting to chatbot backend." }
+            ]);
+        }
+
+        setLoading(false);
     };
 
     return (
@@ -33,6 +56,7 @@ const Chatbot = () => {
                         {msg.text}
                     </div>
                 ))}
+                {loading && <div className="message bot">Typing...</div>}
             </div>
 
             <div className="input-section">
