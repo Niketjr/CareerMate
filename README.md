@@ -193,13 +193,6 @@ Also respond to career-related questions clearly and in JSON format if extractio
 """
 ```
 
----
-
-## 📜 License
-
-This project is licensed under the MIT License.
-
----
 
 ## 🙋‍♂️ Author
 
