@@ -40,11 +40,10 @@ CareerMate is a full-stack AI-powered web application designed to guide users th
 - **Language**: Python
 - **AI Integration**: Ollama (local or via Cloudflare Tunnel)
 - **Parsing Libraries**: PyMuPDF, python-docx, Spacy / Regex
-- **Database**: SQLite (default), PostgreSQL (for production)
 
 ### 💻 Frontend
-- **Framework**: React.js (Vite)
-- **Styling**: Tailwind CSS
+- **Framework**: React.js 
+- **Styling**: CSS
 - **State Management**: Context API
 - **API Integration**: Axios, REST API
 
